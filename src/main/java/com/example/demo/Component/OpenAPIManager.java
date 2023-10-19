@@ -26,17 +26,13 @@ import java.util.stream.StreamSupport;
 
 @Component
 public class OpenAPIManager {
-    String openApiURL = "http://aiopen.etri.re.kr:8000/HumanParsing";
-    String accessKey = "e992244c-b81b-4913-964a-805c6b84799c";    // 발급받은 API Key
-    String type = ".jpg";     // 이미지 파일 확장자
-    String file = "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/person_detect_1.jpg";  	// 이미지 파일 경로
-    String imageContents = "";
     Gson gson = new Gson();
 
-    public void getHumanParsingApi() throws JsonProcessingException {
+    public void getHumanParsingApi(String openApiURL, String accessKey, String type, String file) throws JsonProcessingException {
         Map<String, Object> request = new HashMap<>();
         Map<String, String> argument = new HashMap<>();
 
+        String imageContents = "";
         try {
             Path path = Paths.get(file);
             byte[] imageBytes = Files.readAllBytes(path);
