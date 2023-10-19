@@ -16,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +30,31 @@ import java.util.stream.StreamSupport;
 @Component
 public class OpenAPIManager {
     Gson gson = new Gson();
+
+    public void getWikiQA(String openApiURL, String accessKey,String type, String question) throws JsonProcessingException, UnsupportedEncodingException {
+
+        Map<String, Object> request = new HashMap<>();
+        Map<String, String> argument = new HashMap<>();
+
+        argument.put("question", question);
+        argument.put("type", type);
+
+        request.put("argument", argument);
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json; charset=UTF-8");
+        headers.set("Authorization", accessKey);
+
+        HttpEntity<byte[]> entity = new HttpEntity<>(gson.toJson(request).getBytes(StandardCharsets.UTF_8), headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(openApiURL, HttpMethod.POST, entity, String.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(response.getBody());
+
+        System.out.println(jsonNode);
+    }
 
     public void getHumanParsingApi(String openApiURL, String accessKey, String type, String file) throws JsonProcessingException {
         Map<String, Object> request = new HashMap<>();

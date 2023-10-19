@@ -20,8 +20,14 @@ public class OpenAPIController {
     @Value("${api.key}")
     private String getKey;
     @GetMapping("open-api")
-    public void fetch() throws UnsupportedEncodingException, JsonProcessingException {
+    public void getHumanParsingApi() throws UnsupportedEncodingException, JsonProcessingException {
         openApiManager.getHumanParsingApi("http://aiopen.etri.re.kr:8000/HumanParsing", getKey
                 ,".jpg", "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/person_detect_1.jpg");
+    }
+
+    @GetMapping("open-api/wikiQA")
+    public void getWikiQA() throws UnsupportedEncodingException, JsonProcessingException {
+        openApiManager.getWikiQA("http://aiopen.etri.re.kr:8000/WikiQA", getKey,"irqa","김구가 누구야?"
+                );
     }
 }
