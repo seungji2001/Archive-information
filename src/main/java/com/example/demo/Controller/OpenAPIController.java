@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Component.OpenAPIManager;
+import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,7 @@ public class OpenAPIController {
     }
 
     @GetMapping("open-api/wikiQA")
-    public void getWikiQA() throws UnsupportedEncodingException, JsonProcessingException {
-        openApiManager.getWikiQA("http://aiopen.etri.re.kr:8000/WikiQA", getKey,"irqa","김구가 누구야?"
-                );
+    public ResponseEntity<ChatBotResponseDto.ResponseAnswer> getWikiQA() throws UnsupportedEncodingException, JsonProcessingException {
+        return ResponseEntity.ok(openApiManager.getWikiQA("http://aiopen.etri.re.kr:8000/WikiQA", getKey,"irqa","김구가 누구야?"));
     }
 }

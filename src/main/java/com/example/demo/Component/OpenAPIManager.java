@@ -1,5 +1,7 @@
 package com.example.demo.Component;
 
+import com.example.demo.Dto.ChatBotDto.ChatBotRequestDto;
+import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.example.demo.Dto.HumanParsing;
 import com.example.demo.Util.HumanParsingUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,7 +33,7 @@ import java.util.stream.StreamSupport;
 public class OpenAPIManager {
     Gson gson = new Gson();
 
-    public void getWikiQA(String openApiURL, String accessKey,String type, String question) throws JsonProcessingException, UnsupportedEncodingException {
+    public ChatBotResponseDto.ResponseAnswer getWikiQA(String openApiURL, String accessKey, String type, String question) throws JsonProcessingException, UnsupportedEncodingException {
 
         Map<String, Object> request = new HashMap<>();
         Map<String, String> argument = new HashMap<>();
@@ -53,7 +55,13 @@ public class OpenAPIManager {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response.getBody());
 
-        System.out.println(jsonNode);
+
+        JsonNode answer = jsonNode.get("return_object").findValue("AnswerInfo");
+
+        return ChatBotResponseDto.ResponseAnswer.builder()
+                .answer(answer.get(0).get("answer").asText())
+                .build();
+
     }
 
     public void getHumanParsingApi(String openApiURL, String accessKey, String type, String file) throws JsonProcessingException {
