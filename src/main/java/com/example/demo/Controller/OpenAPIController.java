@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Component.OpenAPIManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class OpenAPIController {
     private final OpenAPIManager openApiManager;
 
     @GetMapping("open-api")
-    public void fetch() throws UnsupportedEncodingException {
+    public void fetch() throws UnsupportedEncodingException, JsonProcessingException {
         openApiManager.getHumanParsingApi();
     }
 }
