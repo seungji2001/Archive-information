@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Component.OpenAPIManager;
+import com.example.demo.Component.WiseNLUManager;
 import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 public class OpenAPIController {
     private final OpenAPIManager openApiManager;
+    private final WiseNLUManager wiseNLUManager;
 
     @Value("${api.key}")
     private String getKey;
@@ -29,5 +31,10 @@ public class OpenAPIController {
     @GetMapping("open-api/wikiQA")
     public ResponseEntity<ChatBotResponseDto.ResponseAnswer> getWikiQA() throws UnsupportedEncodingException, JsonProcessingException {
         return ResponseEntity.ok(openApiManager.getWikiQA("http://aiopen.etri.re.kr:8000/WikiQA", getKey,"irqa","김구가 누구야?"));
+    }
+
+    @GetMapping("wiseNLU")
+    public void getWiseNLU() throws UnsupportedEncodingException, JsonProcessingException {
+        wiseNLUManager.getWiseNLU(getKey);
     }
 }
