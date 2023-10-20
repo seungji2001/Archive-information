@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Component.OpenAPIManager;
+import com.example.demo.Component.VideoParseManager;
 import com.example.demo.Component.WiseNLUManager;
 import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.example.demo.Dto.ClothParsingDto.ClothRequestDto;
@@ -25,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 public class OpenAPIController {
     private final OpenAPIManager openApiManager;
     private final WiseNLUManager wiseNLUManager;
+    private final VideoParseManager videoParseManager;
 
     @Value("${api.key}")
     private String getKey;
@@ -43,5 +45,15 @@ public class OpenAPIController {
     @PostMapping("wiseNLU")
     public ResponseEntity<ClothResponseDto.ClothList> getWiseNLU(@RequestBody ClothRequestDto.questionRequest questionRequest) throws UnsupportedEncodingException, JsonProcessingException {
         return ResponseEntity.ok().body(wiseNLUManager.getWiseNLU(getKey, questionRequest));
+    }
+
+    @GetMapping("videoParse")
+    public void getVideoParse() throws UnsupportedEncodingException, JsonProcessingException {
+        videoParseManager.getVideoParse(getKey);
+    }
+
+    @GetMapping("videoParse/status")
+    public void getVideoParseStatus() throws UnsupportedEncodingException, JsonProcessingException {
+        videoParseManager.getVideoParseStatus(getKey);
     }
 }
