@@ -100,7 +100,6 @@ public class OpenAPIManager {
 
         List<HumanParsing.Person> list = new ArrayList<>();
         for(int i = 0; i<datasets.size(); i++){
-            System.out.println(datasets.get(i).get("num"));
             JsonNode jsonNode1 = datasets.get(i);
             HumanParsing.Person humanParsing = HumanParsing.Person.builder()
                     .num(jsonNode1.get("num").toString()).position(changeToList(jsonNode1.get("position").asText()))

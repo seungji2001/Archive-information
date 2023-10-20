@@ -3,9 +3,11 @@ package com.example.demo.Controller;
 import com.example.demo.Component.OpenAPIManager;
 import com.example.demo.Component.WiseNLUManager;
 import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
+import com.example.demo.Dto.ClothParsingDto.ClothResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +36,7 @@ public class OpenAPIController {
     }
 
     @GetMapping("wiseNLU")
-    public void getWiseNLU() throws UnsupportedEncodingException, JsonProcessingException {
-        wiseNLUManager.getWiseNLU(getKey);
+    public ResponseEntity<ClothResponseDto.ClothList> getWiseNLU() throws UnsupportedEncodingException, JsonProcessingException {
+        return ResponseEntity.ok().body(wiseNLUManager.getWiseNLU(getKey));
     }
 }

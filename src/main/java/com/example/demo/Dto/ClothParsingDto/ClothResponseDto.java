@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ClothResponseDto {
 
@@ -16,8 +17,8 @@ public class ClothResponseDto {
     @Builder
     @Data
     public static class ClothResponse {
-        private ColorResponse colorResponse;
-        private ClothTypeResponse clothTypeResponse;
+        private Optional<ColorResponse> colorResponse;
+        private Optional<ClothTypeResponse> clothTypeResponse;
     }
 
     @Builder
