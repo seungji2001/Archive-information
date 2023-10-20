@@ -4,6 +4,7 @@ import com.example.demo.Component.OpenAPIManager;
 import com.example.demo.Component.WiseNLUManager;
 import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.example.demo.Dto.ClothParsingDto.ClothResponseDto;
+import com.example.demo.Dto.HumanParsing;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +25,14 @@ public class OpenAPIController {
 
     @Value("${api.key}")
     private String getKey;
-    @GetMapping("open-api")
-    public void getHumanParsingApi() throws UnsupportedEncodingException, JsonProcessingException {
-        openApiManager.getHumanParsingApi("http://aiopen.etri.re.kr:8000/HumanParsing", getKey
-                ,".jpg", "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/person_detect_1.jpg");
+
+    @GetMapping("humanParse")
+    public ResponseEntity<HumanParsing.ResponseDto> getHumanParsingApi() throws UnsupportedEncodingException, JsonProcessingException {
+        return ResponseEntity.ok().body(openApiManager.getHumanParsingApi("http://aiopen.etri.re.kr:8000/HumanParsing", getKey
+                ,".jpg", "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/person_detect_1.jpg"));
     }
 
-    @GetMapping("open-api/wikiQA")
+    @GetMapping("wikiQA")
     public ResponseEntity<ChatBotResponseDto.ResponseAnswer> getWikiQA() throws UnsupportedEncodingException, JsonProcessingException {
         return ResponseEntity.ok(openApiManager.getWikiQA("http://aiopen.etri.re.kr:8000/WikiQA", getKey,"irqa","김구가 누구야?"));
     }
