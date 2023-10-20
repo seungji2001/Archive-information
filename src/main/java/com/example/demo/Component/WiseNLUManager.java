@@ -1,6 +1,7 @@
 package com.example.demo.Component;
 
 import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
+import com.example.demo.Dto.ClothParsingDto.ClothRequestDto;
 import com.example.demo.Dto.ClothParsingDto.ClothResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,7 +42,7 @@ public class WiseNLUManager {
         }
     }
 
-    public ClothResponseDto.ClothList getWiseNLU(String accessKey) throws JsonProcessingException, UnsupportedEncodingException {
+    public ClothResponseDto.ClothList getWiseNLU(String accessKey, ClothRequestDto.questionRequest text) throws JsonProcessingException, UnsupportedEncodingException {
 
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU";
 
@@ -49,14 +50,10 @@ public class WiseNLUManager {
         Map<String, String> argument = new HashMap<>();
 
         String analysisCode = "ner";        // 언어 분석 코드
-        String text = "";           // 분석할 텍스트 데이터
-
         Gson gson = new Gson();
-        // 언어 분석 기술(문어)
-        text += "흰색 청바지와 하얀색 셔츠를 입은 사람을 찾아줘";
 
         argument.put("analysis_code", analysisCode);
-        argument.put("text", text);
+        argument.put("text", text.getQuestion());
 
         request.put("argument", argument);
 
