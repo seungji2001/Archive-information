@@ -64,7 +64,7 @@ public class OpenAPIManager {
 
     }
 
-    public void getHumanParsingApi(String openApiURL, String accessKey, String type, String file) throws JsonProcessingException {
+    public HumanParsing.ResponseDto getHumanParsingApi(String openApiURL, String accessKey, String type, String file) throws JsonProcessingException {
         Map<String, Object> request = new HashMap<>();
         Map<String, String> argument = new HashMap<>();
 
@@ -121,7 +121,9 @@ public class OpenAPIManager {
             list.add(humanParsing);
         }
 
-        System.out.println(list);
+        return HumanParsing.ResponseDto.builder()
+                .personList(list)
+                .build();
     }
 
     private Color changeToColor(String s) {
