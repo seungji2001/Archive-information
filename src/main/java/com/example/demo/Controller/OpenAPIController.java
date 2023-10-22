@@ -1,12 +1,14 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Component.OpenAPIManager;
+import com.example.demo.Component.RecognitionManager;
 import com.example.demo.Component.VideoParseManager;
 import com.example.demo.Component.WiseNLUManager;
 import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.example.demo.Dto.ClothParsingDto.ClothRequestDto;
 import com.example.demo.Dto.ClothParsingDto.ClothResponseDto;
 import com.example.demo.Dto.HumanParsing;
+import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ public class OpenAPIController {
     private final OpenAPIManager openApiManager;
     private final WiseNLUManager wiseNLUManager;
     private final VideoParseManager videoParseManager;
+    private final RecognitionManager recognitionManager;
 
     @Value("${api.key}")
     private String getKey;
@@ -55,5 +58,10 @@ public class OpenAPIController {
     @GetMapping("videoParse/status")
     public void getVideoParseStatus() throws UnsupportedEncodingException, JsonProcessingException {
         videoParseManager.getVideoParseStatus(getKey);
+    }
+
+    @GetMapping("recognition")
+    public ResponseEntity<RecognitionResponseDto.questionRequest> getRecognition() throws UnsupportedEncodingException, JsonProcessingException {
+        return ResponseEntity.ok().body(recognitionManager.getRecognition(getKey));
     }
 }
