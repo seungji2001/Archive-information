@@ -34,7 +34,7 @@ public class RecordWordController {
     }
 
     @PostMapping("/question/{recording_id}")
-    public ResponseEntity<MRCServletResponseDto.ResponseDto> getAnswerByQuestion(@PathVariable("recording_id")Long recording_id, String getKey, @RequestBody MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
+    public ResponseEntity<MRCServletResponseDto.ResponseDto> getAnswerByQuestion(@PathVariable("recording_id")Long recording_id, @RequestBody MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
         return ResponseEntity.ok().body(recordWordService.getAnswerByQuestion(recording_id, getKey, requestDto));
     }
 }

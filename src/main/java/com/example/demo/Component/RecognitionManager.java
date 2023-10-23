@@ -61,7 +61,7 @@ public class RecognitionManager {
         JsonNode jsonNode = objectMapper.readTree(response.getBody());
 
         return RecognitionResponseDto.questionResponse.builder()
-                .recognized(jsonNode.get("return_object").get("recognized").toString())
+                .recognized(jsonNode.get("return_object").get("recognized").asText())
                 .build();
     }
 }
