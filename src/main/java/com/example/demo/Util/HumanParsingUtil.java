@@ -1,11 +1,16 @@
 package com.example.demo.Util;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
+import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,9 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class HumanParsingUtil {
-    static public void main(String[] args) {
+    static public void main(String[] args) throws JsonProcessingException {
 //        humanParsing();
-        testGrammar();
+//        testGrammar();
+        MRCServlet();
     }
 
     private static void testGrammar() {
@@ -71,6 +77,39 @@ public class HumanParsingUtil {
         System.out.println("[responseCode] " + response.getStatusCode());
         System.out.println("[responBody]");
         System.out.println(response.getBody());
+    }
+
+    public static void MRCServlet() throws JsonProcessingException {
+        String accessKey = "e992244c-b81b-4913-964a-805c6b84799c";
+        String openApiURL = "http://aiopen.etri.re.kr:8000/MRCServlet";
+        String passage = "루트비히 판 베토벤(독일어: Ludwig van Beethoven, 문화어: 루드위히 판 베토벤, 1770년 12월 17일 ~ 1827년 3월 26일)은 독일의 서양 고전 음악 작곡가이다. 독일의 본에서 태어났으며, 성인이 된 이후 거의 오스트리아 빈에서 살았다. 감기와 폐렴으로 인한 합병증으로 투병하다가 57세로 생을 마친 그는 고전주의와 낭만주의의 전환기에 활동한 주요 음악가이며, 작곡가로 널리 존경받고 있다. 음악의 성인(聖人) 또는 악성(樂聖)이라는 별칭으로 부르기도 한다. 가장 잘 알려진 작품 가운데에는 〈교향곡 5번〉, 〈교향곡 6번〉, 〈교향곡 9번〉, 〈비창 소나타〉, 〈월광 소나타〉 등이 있다.";            // 분석할 문단 데이터
+        String question = "베토벤이 누구야";
+
+
+        Map<String, Object> request = new HashMap<>();
+        Map<String, String> argument = new HashMap<>();
+
+        argument.put("question", question);
+        argument.put("passage", passage);
+
+        request.put("argument", argument);
+
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json; charset=UTF-8");
+        headers.set("Authorization", accessKey);
+
+        Gson gson = new Gson();
+        HttpEntity<String> entity = new HttpEntity<>(gson.toJson(request), headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(openApiURL, HttpMethod.POST, entity, String.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(response.getBody());
+
+        System.out.println(jsonNode);
     }
 
 }
