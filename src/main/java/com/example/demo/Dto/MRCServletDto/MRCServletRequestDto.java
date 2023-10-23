@@ -15,4 +15,12 @@ public class MRCServletRequestDto {
         String text;
         String question;
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class RequestQuestionDto{
+        String question;
+    }
 }
