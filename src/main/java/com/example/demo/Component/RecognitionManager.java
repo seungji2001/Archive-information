@@ -24,7 +24,7 @@ import java.util.Map;
 @Component
 public class RecognitionManager {
 
-    public RecognitionResponseDto.questionRequest getRecognition(String accessKey) throws JsonProcessingException, UnsupportedEncodingException {
+    public RecognitionResponseDto.questionResponse getRecognition(String accessKey) throws JsonProcessingException, UnsupportedEncodingException {
 
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String languageCode = "korean";     // 언어 코드
@@ -60,7 +60,7 @@ public class RecognitionManager {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response.getBody());
 
-        return RecognitionResponseDto.questionRequest.builder()
+        return RecognitionResponseDto.questionResponse.builder()
                 .recognized(jsonNode.get("return_object").get("recognized").toString())
                 .build();
     }
