@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Component.RecognitionManager;
 import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
+import com.example.demo.Dto.RecordWordDto.RecordWordResponseDto;
 import com.example.demo.Repository.RecordWordRepository;
 import com.example.demo.domain.RecordWord;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,5 +27,14 @@ public class RecordWordService {
                 .paragraph(questionResponse.getRecognized())
                 .build();
         return recordWordRepository.save(recordWord).getId();
+    }
+
+    @Transactional
+    public RecordWordResponseDto.GetParagrahResponseDto getParagraph(Long recording_id){
+        RecordWord recordWord = recordWordRepository.findById(recording_id).orElseThrow();
+        return RecordWordResponseDto.GetParagrahResponseDto
+                .builder()
+                .paragraph(recordWord.getParagraph())
+                .build();
     }
 }
