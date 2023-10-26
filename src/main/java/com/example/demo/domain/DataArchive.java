@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "recordword")
-public class RecordWord {
+@Entity(name = "dataarchive")
+public class DataArchive {
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="record_word_id")
+    @Column(name="data_archive_id")
     @Id
     private Long id;
-    private String paragraph;
+    private String writeData;
 }
