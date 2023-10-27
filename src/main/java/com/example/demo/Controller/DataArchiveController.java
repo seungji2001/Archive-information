@@ -25,8 +25,8 @@ public class DataArchiveController {
 
     //wiki에서 단어 찾기
     //google 검색 제공
-    @GetMapping("/search/{keyWord}")
-    public void searchData(@PathVariable("keyWord") String keyWord) {
-        dataArchiveService.searchData(keyWord,googleKey,cx);
+    @GetMapping("/search")
+    public void searchData(@RequestBody DataArchiveRequestDto.SearchData searchData) {
+        dataArchiveService.searchData(searchData,googleKey,cx);
     }
 }

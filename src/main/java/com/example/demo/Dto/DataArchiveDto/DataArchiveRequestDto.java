@@ -14,4 +14,12 @@ public class DataArchiveRequestDto {
     public static class WriteData{
         String data;
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SearchData{
+        String data;
+    }
 }

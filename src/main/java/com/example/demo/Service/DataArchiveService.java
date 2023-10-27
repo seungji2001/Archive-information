@@ -23,7 +23,7 @@ public class DataArchiveService {
         return dataArchiveRepository.save(dataArchive).getId();
     }
 
-    public void searchData(String keyword, String googleKey, String cx) {
-        customSearchManager.customSearch(keyword, googleKey, cx);
+    public void searchData(DataArchiveRequestDto.SearchData searchData, String googleKey, String cx) {
+        customSearchManager.customSearch(searchData, googleKey, cx);
     }
 }

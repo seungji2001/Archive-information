@@ -1,5 +1,6 @@
 package com.example.demo.Component;
 
+import com.example.demo.Dto.DataArchiveDto.DataArchiveRequestDto;
 import com.example.demo.Dto.MRCServletDto.MRCServletResponseDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 @Component
 public class CustomSearchManager {
-    public void customSearch(String keyWord, String googleKey, String cx){
+    public void customSearch(DataArchiveRequestDto.SearchData searchData, String googleKey, String cx){
         //    GET https://www.googleapis.com/customsearch/v1?key=INSERT_YOUR_API_KEY&cx=902104d01534b439e:omuauf_lfve&q=lectures
         String openApiURL = "https://www.googleapis.com/customsearch/v1?key="
                 + googleKey
@@ -24,7 +25,7 @@ public class CustomSearchManager {
                 +  cx
                 + "&"
                 + "q="
-                + keyWord;
+                + searchData.getData();
 
         System.out.println(openApiURL);
         RestTemplate restTemplate = new RestTemplate();
