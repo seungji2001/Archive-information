@@ -5,9 +5,10 @@ import com.example.demo.Service.DataArchiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class DataArchiveController {
 
     @Autowired
@@ -28,5 +29,10 @@ public class DataArchiveController {
     @GetMapping("/search")
     public void searchData(@RequestBody DataArchiveRequestDto.SearchData searchData) {
         dataArchiveService.searchData(searchData,googleKey,cx);
+    }
+
+    @GetMapping("/home")
+    public String home(){
+        return "home";
     }
 }
