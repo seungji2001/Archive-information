@@ -228,11 +228,75 @@
             font-size:20px;
             letter-spacing:0;
         }
+
+        .e109_5 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:431px;
+            height:693px;
+            position:absolute;
+            left:492px;
+            top:211px;
+        }
+        .109_5 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e109_6 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:431px;
+            height:83px;
+            position:absolute;
+            left:492px;
+            top:109px;
+        }
+        .109_6 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e109_8 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:83px;
+            height:52px;
+            position:absolute;
+            left:823px;
+            top:121px;
+        }
+        .109_8 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e109_10 {
+            color:rgba(0, 0, 0, 1);
+            width:37px;
+            height:24px;
+            position:absolute;
+            left:846px;
+            top:137px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e109_11 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            color:rgba(0, 0, 0, 1);
+            width:298px;
+            height:49px;
+            position:absolute;
+            left:508px;
+            top:124px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+
     </style>
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        function uploadFile() {
+
+    function uploadFile() {
             var inputFile = document.getElementById("input-file");
             var file = inputFile.files[0];
 
@@ -302,6 +366,13 @@
                     console.error(error);
                 });
         }
+
+    function askQuestionBaseOnTextFile(){
+        console.log($('.e109_11').val())
+        var element = document.querySelector(".e108_4");
+
+
+    }
     </script>
 </head>
 <body>
@@ -318,6 +389,10 @@
     <div class="e103_14"></div>
     <div class="e104_2" onclick="getTextFromFile()"></div><span  class="e104_3">텍스트로 반환</span>
     <span  class="e108_4"></span>
+    <div class="e109_5"></div>
+    <div class="e109_6"></div>
+    <div class="e109_8"></div><span  class="e109_10" onclick="askQuestionBaseOnTextFile()">질문</span>
+    <input type="text" class="e109_11" placeholder="질문하기">
 </div>
 </body>
 </html>
