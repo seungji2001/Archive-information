@@ -54,7 +54,7 @@
             }
         .e103_10 {
             color:rgba(0, 0, 0, 1);
-            width:135px;
+            width:200px;
             height:24px;
             position:absolute;
             left:46px;
@@ -86,15 +86,238 @@
             top:106px;
         }
 
+        .e104_2 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:176px;
+            height:61px;
+            position:absolute;
+            left:155px;
+            top:131px;
+            border-top-left-radius:20px;
+            border-top-right-radius:20px;
+            border-bottom-left-radius:20px;
+            border-bottom-right-radius:20px;
+        }
+        .104_2 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e104_3 {
+            color:rgba(0, 0, 0, 1);
+            width:117px;
+            height:24px;
+            position:absolute;
+            left:185px;
+            top:149px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e103_8 {
+            background-color:rgba(203.90047878026962, 205.06250202655792, 190.5372342467308, 1);
+            width:1438px;
+            height:936px;
+            position:absolute;
+            left:4px;
+            top:1px;
+        }
+        .e103_9 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:176px;
+            height:61px;
+            position:absolute;
+            left:25px;
+            top:25px;
+            border-top-left-radius:20px;
+            border-top-right-radius:20px;
+            border-bottom-left-radius:20px;
+            border-bottom-right-radius:20px;
+        }
+        .103_9 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e103_12 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:176px;
+            height:61px;
+            position:absolute;
+            left:285px;
+            top:25px;
+            border-top-left-radius:20px;
+            border-top-right-radius:20px;
+            border-bottom-left-radius:20px;
+            border-bottom-right-radius:20px;
+        }
+        .103_12 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e103_10 {
+            color:rgba(0, 0, 0, 1);
+            width:135px;
+            height:24px;
+            position:absolute;
+            left:46px;
+            top:43px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e103_13 {
+            color:rgba(0, 0, 0, 1);
+            width:117px;
+            height:24px;
+            position:absolute;
+            left:315px;
+            top:43px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e103_14 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:436px;
+            height:798px;
+            position:absolute;
+            left:25px;
+            top:106px;
+        }
+        .e104_2 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:176px;
+            height:61px;
+            position:absolute;
+            left:155px;
+            top:131px;
+            border-top-left-radius:20px;
+            border-top-right-radius:20px;
+            border-bottom-left-radius:20px;
+            border-bottom-right-radius:20px;
+        }
+        .104_2 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e104_3 {
+            color:rgba(0, 0, 0, 1);
+            width:117px;
+            height:24px;
+            position:absolute;
+            left:185px;
+            top:149px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+
+        .e108_4 {
+            color:rgba(0, 0, 0, 1);
+            width:405px;
+            height:651px;
+            position:absolute;
+            left:42px;
+            top:236px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function uploadFile() {
+            var inputFile = document.getElementById("input-file");
+            var file = inputFile.files[0];
+
+            var formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+                .then(function(response) {
+                    if (response.ok) {
+                        alert("File uploaded successfully");
+                    } else {
+                        alert("Error uploading file");
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+        function getTextFromFile(){
+            var inputFile = document.getElementById("input-file");
+            var file = inputFile.files[0];
+
+            var jsonData = {
+                filename: file.name
+            };
+            fetch("/recording", {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        alert("Error uploading file");
+                    }
+                })
+                .then(function(data) {
+                    return fetch("/paragraph/"+data, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Error sending another API request");
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    var element = document.querySelector(".e108_4");
+                    if (element) {
+                        // Set the inner text of the element
+                        element.innerText = data.paragraph;
+                    }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
+    </script>
 </head>
 <body>
 <div class=e103_19>
     <div class="e103_8"></div>
     <div class="e103_9"></div>
-    <div class="e103_12"></div><span  class="e103_10">음성파일 업로드 </span><span  class="e103_13">텍스트로 반환</span>
+    <div class="e103_12"></div>
+
+
+    <input id="input-file" class="e103_10" type="file" name="file"/>
+    <button class="e103_13" onclick="uploadFile()" type="submit">
+        Upload
+    </button>
     <div class="e103_14"></div>
+    <div class="e104_2" onclick="getTextFromFile()"></div><span  class="e104_3">텍스트로 반환</span>
+    <span  class="e108_4"></span>
 </div>
 </body>
 </html>

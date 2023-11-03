@@ -4,6 +4,7 @@ import com.example.demo.Component.MRCServletManager;
 import com.example.demo.Component.RecognitionManager;
 import com.example.demo.Dto.MRCServletDto.MRCServletRequestDto;
 import com.example.demo.Dto.MRCServletDto.MRCServletResponseDto;
+import com.example.demo.Dto.RecognitionDto.RecognitionRequestDto;
 import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
 import com.example.demo.Dto.RecordWordDto.RecordWordResponseDto;
 import com.example.demo.Repository.RecordWordRepository;
@@ -26,8 +27,8 @@ public class RecordWordService {
     MRCServletManager mrcServletManager;
 
     @Transactional
-    public Long recording(String getKey) throws UnsupportedEncodingException, JsonProcessingException {
-        RecognitionResponseDto.questionResponse questionResponse = recognitionManager.getRecognition(getKey);
+    public Long recording(String getKey, RecognitionRequestDto.AudioFileRequest filename) throws UnsupportedEncodingException, JsonProcessingException {
+        RecognitionResponseDto.questionResponse questionResponse = recognitionManager.getRecognition(getKey, filename);
         RecordWord recordWord = RecordWord.builder()
                 .paragraph(questionResponse.getRecognized())
                 .build();
