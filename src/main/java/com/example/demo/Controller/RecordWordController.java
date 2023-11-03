@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@RestController
+@Controller
 public class RecordWordController {
 
     @Value("${api.key}")
@@ -46,8 +46,9 @@ public class RecordWordController {
     }
 
     @PostMapping("/upload")
-    public void uploadFile(@RequestParam("file") MultipartFile file) {
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
         // 업로드된 파일을 저장할 디렉토리 경로
         fileAccessManager.uploadFile(file);
+        return "/textHtml";
     }
 }

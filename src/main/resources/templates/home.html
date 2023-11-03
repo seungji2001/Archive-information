@@ -90,11 +90,28 @@
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.e103_10').on('click', function () {
-                console.log("clicked")
+        function uploadFile() {
+            var inputFile = document.getElementById("input-file");
+            var file = inputFile.files[0];
+
+            var formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData
             })
-        })
+                .then(function(response) {
+                    if (response.ok) {
+                        alert("File uploaded successfully");
+                    } else {
+                        alert("Error uploading file");
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
     </script>
 </head>
 <body>
@@ -102,17 +119,12 @@
     <div class="e103_8"></div>
     <div class="e103_9"></div>
     <div class="e103_12"></div>
-    <form
-            id="uploadForm"
-            method="post"
-            th:action="@{/upload}"
-            enctype="multipart/form-data">
 
-        <input id="input-file" class="e103_10" type="file" name="file"/>
-        <button class="e103_13" type="submit">
-            Upload
-        </button>
-    </form>
+
+    <input id="input-file" class="e103_10" type="file" name="file"/>
+    <button class="e103_13" onclick="uploadFile()" type="submit">
+        Upload
+    </button>
     <div class="e103_14"></div>
 </div>
 </body>
