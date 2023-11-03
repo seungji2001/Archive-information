@@ -1,5 +1,6 @@
 package com.example.demo.Component;
 
+import com.example.demo.Dto.RecognitionDto.RecognitionRequestDto;
 import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,11 +25,11 @@ import java.util.Map;
 @Component
 public class RecognitionManager {
 
-    public RecognitionResponseDto.questionResponse getRecognition(String accessKey) throws JsonProcessingException, UnsupportedEncodingException {
+    public RecognitionResponseDto.questionResponse getRecognition(String accessKey, RecognitionRequestDto.AudioFileRequest filename) throws JsonProcessingException, UnsupportedEncodingException {
 
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String languageCode = "korean";     // 언어 코드
-        String audioFilePath = "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/KOR_M_RM0276MKDH0135.pcm";  // 녹음된 음성 파일 경로
+        String audioFilePath = "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/" + filename.getFilename();  // 녹음된 음성 파일 경로
         String audioContents = null;
 
         try {

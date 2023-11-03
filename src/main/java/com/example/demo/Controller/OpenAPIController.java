@@ -7,6 +7,7 @@ import com.example.demo.Dto.ClothParsingDto.ClothResponseDto;
 import com.example.demo.Dto.HumanParsing;
 import com.example.demo.Dto.MRCServletDto.MRCServletRequestDto;
 import com.example.demo.Dto.MRCServletDto.MRCServletResponseDto;
+import com.example.demo.Dto.RecognitionDto.RecognitionRequestDto;
 import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,8 @@ public class OpenAPIController {
     }
 
     @GetMapping("recognition")
-    public ResponseEntity<RecognitionResponseDto.questionResponse> getRecognition() throws UnsupportedEncodingException, JsonProcessingException {
-        return ResponseEntity.ok().body(recognitionManager.getRecognition(getKey));
+    public ResponseEntity<RecognitionResponseDto.questionResponse> getRecognition(@RequestBody RecognitionRequestDto.AudioFileRequest filename) throws UnsupportedEncodingException, JsonProcessingException {
+        return ResponseEntity.ok().body(recognitionManager.getRecognition(getKey, filename));
     }
 
     @PostMapping("MRCServlet")

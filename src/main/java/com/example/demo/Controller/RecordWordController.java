@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.Component.FileAccessManager;
 import com.example.demo.Dto.MRCServletDto.MRCServletRequestDto;
 import com.example.demo.Dto.MRCServletDto.MRCServletResponseDto;
+import com.example.demo.Dto.RecognitionDto.RecognitionRequestDto;
 import com.example.demo.Dto.RecordWordDto.RecordWordResponseDto;
 import com.example.demo.Repository.RecordWordRepository;
 import com.example.demo.Service.RecordWordService;
@@ -30,11 +31,12 @@ public class RecordWordController {
     @Autowired
     FileAccessManager fileAccessManager;
 
-    @GetMapping("/recording")
-    public ResponseEntity<Long> recording() throws UnsupportedEncodingException, JsonProcessingException {
-        return ResponseEntity.ok().body(recordWordService.recording(getKey));
+    @PostMapping("/recording")
+    public ResponseEntity<Long> recording(@RequestBody RecognitionRequestDto.AudioFileRequest audioFileRequest) throws UnsupportedEncodingException, JsonProcessingException {
+        return ResponseEntity.ok().body(recordWordService.recording(getKey, audioFileRequest));
     }
 
+    //음성 파일 텍스트로 변환
     @GetMapping("/paragraph/{recording_id}")
     public ResponseEntity<RecordWordResponseDto.GetParagrahResponseDto> getParagraph(@PathVariable("recording_id") Long recording_id){
         return ResponseEntity.ok().body(recordWordService.getParagraph(recording_id));
@@ -49,6 +51,6 @@ public class RecordWordController {
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         // 업로드된 파일을 저장할 디렉토리 경로
         fileAccessManager.uploadFile(file);
-        return "/textHtml";
+        return "home";
     }
 }
