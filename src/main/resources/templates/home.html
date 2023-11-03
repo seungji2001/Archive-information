@@ -54,7 +54,7 @@
             }
         .e103_10 {
             color:rgba(0, 0, 0, 1);
-            width:135px;
+            width:200px;
             height:24px;
             position:absolute;
             left:46px;
@@ -88,12 +88,31 @@
 
     </style>
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.e103_10').on('click', function () {
+                console.log("clicked")
+            })
+        })
+    </script>
 </head>
 <body>
 <div class=e103_19>
     <div class="e103_8"></div>
     <div class="e103_9"></div>
-    <div class="e103_12"></div><span  class="e103_10">음성파일 업로드 </span><span  class="e103_13">텍스트로 반환</span>
+    <div class="e103_12"></div>
+    <form
+            id="uploadForm"
+            method="post"
+            th:action="@{/upload}"
+            enctype="multipart/form-data">
+
+        <input id="input-file" class="e103_10" type="file" name="file"/>
+        <button class="e103_13" type="submit">
+            Upload
+        </button>
+    </form>
     <div class="e103_14"></div>
 </div>
 </body>
