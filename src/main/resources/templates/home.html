@@ -340,6 +340,7 @@
                     }
                 })
                 .then(function(data) {
+                    $('.audioFileNumber').val(data)
                     return fetch("/paragraph/"+data, {
                         method: "GET",
                         headers: {
@@ -367,10 +368,38 @@
                 });
         }
 
-    function askQuestionBaseOnTextFile(){
-        console.log($('.e109_11').val())
+    function askQuestionBaseOnTextFile() {
+        var question = document.querySelector('.e109_11')
         var element = document.querySelector(".e108_4");
-
+        var audioFileNum = $('.audioFileNumber').val()
+        var jsonData = {
+            question: question
+        }
+        fetch("/question/"+autoFileNum, {
+            method: "POST",
+            body: JSON.stringify(jsonData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    alert('Error sending another API request')
+                }
+            })
+            .then(function(data) {
+                console.log(data); // Access the JSON response data from the second API request
+                var element = document.querySelector(".e109_5");
+                if (element) {
+                    // Set the inner text of the element
+                    element.innerText = data.answer;
+                }
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
 
     }
     </script>
@@ -386,6 +415,7 @@
     <button class="e103_13" onclick="uploadFile()" type="submit">
         Upload
     </button>
+    <input type="hidden" class="audioFileNumber">
     <div class="e103_14"></div>
     <div class="e104_2" onclick="getTextFromFile()"></div><span  class="e104_3">텍스트로 반환</span>
     <span  class="e108_4"></span>
