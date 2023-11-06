@@ -338,21 +338,29 @@
             top:0px;
         }
         .e115_9 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
             box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
             background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
-            width:443px;
+            width:423px;
             height:80px;
-            position:absolute;
+            position:flex;
             left:2px;
             top:0px;
+            overflow: hidden;
+        }
+        .link_text{
+            font-size: 20px;
         }
     </style>
-<!--    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css'>-->
+    <!--    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css'>-->
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 
-    function uploadFile() {
+        function uploadFile() {
             var inputFile = document.getElementById("input-file");
             var file = inputFile.files[0];
 
@@ -423,41 +431,81 @@
                     console.error(error);
                 });
         }
-
-    function askQuestionBaseOnTextFile() {
-        var question = document.querySelector('.e109_11')
-        var element = document.querySelector(".e108_4");
-        var audioFileNum = $('.audioFileNumber').val()
-        var jsonData = {
-            question: question
-        }
-        fetch("/question/"+autoFileNum, {
-            method: "POST",
-            body: JSON.stringify(jsonData),
-            headers: {
-                "Content-Type": "application/json"
+        function askQuestionBaseOnTextFile() {
+            var question = document.querySelector('.e109_11')
+            var element = document.querySelector(".e108_4");
+            var audioFileNum = $('.audioFileNumber').val()
+            var jsonData = {
+                question: question
             }
-        })
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    alert('Error sending another API request')
+            fetch("/question/"+autoFileNum, {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
                 }
             })
-            .then(function(data) {
-                console.log(data); // Access the JSON response data from the second API request
-                var element = document.querySelector(".e109_5");
-                if (element) {
-                    // Set the inner text of the element
-                    element.innerText = data.answer;
-                }
-            })
-            .catch(function(error) {
-                console.error(error);
-            });
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Error sending another API request')
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    var element = document.querySelector(".e109_5");
+                    if (element) {
+                        // Set the inner text of the element
+                        element.innerText = data.answer;
+                    }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
 
-    }
+        }
+        function findRelativeLink(){
+            var jsonData = {
+                question: "data"
+            }
+            fetch("/search", {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Error sending another API request')
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    for (let i = 0; i < data.length; i++) {
+                        var divBox = document.createElement("div");
+                        divBox.classList.add("e115_9");
+                        var a_link = document.createElement("a");
+                        a_link.classList.add("link_text")
+                        a_link.href = data[i].link;
+                        a_link.innerText = data[i].link;
+                        divBox.append(a_link)
+                        document.querySelector(".e115_6").appendChild(divBox);
+                    }
+
+                    // if (element) {
+                    //     // Set the inner text of the element
+                    //     element.innerText = data.answer;
+                    // }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
+
     </script>
 </head>
 <body>
@@ -477,10 +525,10 @@
     <div class="e109_6"></div>
     <div class="e109_8"></div><span  class="e109_10" onclick="askQuestionBaseOnTextFile()">질문</span>
     <input type="text" class="e109_11" placeholder="질문하기">
-    <div class="e115_4"></div><span  class="e115_5">관련 자료 찾기</span>
+    <div class="e115_4" onclick="findRelativeLink()"></div><span  class="e115_5">관련 자료 찾기</span>
     <div class=e115_8>
-        <div class="e115_6"></div>
-        <div class="e115_9"></div>
+        <div class="e115_6">
+        </div>
     </div>
 </div>
 </body>

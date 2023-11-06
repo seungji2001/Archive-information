@@ -11,6 +11,7 @@ public class DataArchiveResponseDto {
     @AllArgsConstructor
     @Builder
     public static class resultLink{
+        String title;
         String link;
     }
 }

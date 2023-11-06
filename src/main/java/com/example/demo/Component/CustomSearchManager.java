@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class CustomSearchManager {
     public List<DataArchiveResponseDto.resultLink> customSearch(DataArchiveRequestDto.SearchData searchData, String googleKey, String cx) throws JsonProcessingException {
         List<DataArchiveResponseDto.resultLink> totalJsonNodes = new ArrayList<>();
-        for(int i = 1; i<=5; i++){
+        for(int i = 1; i<=2; i++){
             String openApiURL = "https://www.googleapis.com/customsearch/v1?key="
                     + googleKey
                     + "&cx="
@@ -33,7 +33,7 @@ public class CustomSearchManager {
                     + "q="
                     + searchData.getData()
                     + "&start="
-                    + i;
+                    + i*10;
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/json; charset=UTF-8");
@@ -44,19 +44,31 @@ public class CustomSearchManager {
             System.out.println(response);
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            List<DataArchiveResponseDto.resultLink> jsonNodes = jsonNode.get("items").findValues("link").stream()
-                    .map(JsonNode::asText)
-                    .filter(text -> text.contains(searchData.getData()))
-                    .map(
-                            text -> {
-                                return DataArchiveResponseDto.resultLink.builder()
-                                        .link(text)
-                                        .build();
-                            }
-                    )
-                    .toList();
-            if(!jsonNodes.isEmpty())
-                totalJsonNodes.addAll(jsonNodes);
+            System.out.println(jsonNode.size());
+            for(int a = 0; a<jsonNode.get("items").size(); a++){
+                String link = jsonNode.get("items").get(a).get("link").asText();
+                String title = jsonNode.get("items").get(a).get("title").asText();
+//                if(title.contains(searchData.getData())){
+                    totalJsonNodes.add( DataArchiveResponseDto.resultLink.builder()
+                            .link(link)
+                            .title(title)
+                            .build()
+                    );
+//                }
+            }
+//            List<DataArchiveResponseDto.resultLink> jsonNodes = jsonNode.get("items").findValues("link").stream()
+//                    .map(JsonNode::asText)
+//                    .filter(text -> text.contains(searchData.getData()))
+//                    .map(
+//                            text -> {
+//                                return DataArchiveResponseDto.resultLink.builder()
+//                                        .link(text)
+//                                        .build();
+//                            }
+//                    )
+//                    .toList();
+//            if(!jsonNodes.isEmpty())
+//                totalJsonNodes.addAll(jsonNodes);
         }
 
         return totalJsonNodes;
