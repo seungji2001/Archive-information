@@ -354,6 +354,34 @@
         .link_text{
             font-size: 20px;
         }
+        .findOnGoogle{
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            width: 300px;
+            height: 60px;
+            flex-shrink: 0;
+            margin: 10px;
+            border: 1px solid #000;
+            background: #D9D9D9;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        .buttonOnGoogle{
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            width: 83px;
+            height: 60px;
+            flex-shrink: 0;
+            margin: 10px;
+            border: 1px solid #000;
+            background: #D9D9D9;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        .searchbox{
+            display: flex;
+            align-items: center;
+        }
     </style>
     <!--    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css'>-->
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
@@ -432,13 +460,12 @@
                 });
         }
         function askQuestionBaseOnTextFile() {
-            var question = document.querySelector('.e109_11')
-            var element = document.querySelector(".e108_4");
-            var audioFileNum = $('.audioFileNumber').val()
+            var question = document.querySelector('.e109_11').value
+            var audioFileNum = parseInt($('.audioFileNumber').val())
             var jsonData = {
                 question: question
             }
-            fetch("/question/"+autoFileNum, {
+            fetch("/question/"+audioFileNum, {
                 method: "POST",
                 body: JSON.stringify(jsonData),
                 headers: {
@@ -491,7 +518,7 @@
                         var a_link = document.createElement("a");
                         a_link.classList.add("link_text")
                         a_link.href = data[i].link;
-                        a_link.innerText = data[i].link;
+                        a_link.innerText = data[i].title;
                         divBox.append(a_link)
                         document.querySelector(".e115_6").appendChild(divBox);
                     }
@@ -506,6 +533,48 @@
                 });
         }
 
+        function buttonOnGoogle(){
+            var data = document.querySelector(".findOnGoogle").value
+            console.log(data)
+            var jsonData = {
+                question: data
+            }
+            fetch("/search", {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Error sending another API request')
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    for (let i = 0; i < data.length; i++) {
+                        var divBox = document.createElement("div");
+                        divBox.classList.add("e115_9");
+                        var a_link = document.createElement("a");
+                        a_link.classList.add("link_text")
+                        a_link.href = data[i].link;
+                        a_link.innerText = data[i].title;
+                        divBox.append(a_link)
+                        document.querySelector(".e115_6").appendChild(divBox);
+                    }
+
+                    // if (element) {
+                    //     // Set the inner text of the element
+                    //     element.innerText = data.answer;
+                    // }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
     </script>
 </head>
 <body>
@@ -528,7 +597,12 @@
     <div class="e115_4" onclick="findRelativeLink()"></div><span  class="e115_5">관련 자료 찾기</span>
     <div class=e115_8>
         <div class="e115_6">
+            <div class="searchbox">
+                <input type="text" class="findOnGoogle" placeholder="google에 물어보세요">
+                <div class="buttonOnGoogle" onclick="buttonOnGoogle()"><p>검색</p></div>
+            </div>
         </div>
+    </div>
     </div>
 </div>
 </body>
