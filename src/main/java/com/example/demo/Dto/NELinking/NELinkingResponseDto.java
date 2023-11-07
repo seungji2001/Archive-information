@@ -13,5 +13,7 @@ public class NELinkingResponseDto {
     public static class ResponseDto{
         String mention;
         String definition;
+        Long s_pos;
+        String url;
     }
 }

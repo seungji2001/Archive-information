@@ -11,7 +11,6 @@ public class NELinkingRequestDto {
     @NoArgsConstructor
     @AllArgsConstructor
    public static class RequestDto{
-        String mention;
-        String definition;
+        String content;
    }
 }
