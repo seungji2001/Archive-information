@@ -413,6 +413,7 @@
         function getTextFromFile(){
             var inputFile = document.getElementById("input-file");
             var file = inputFile.files[0];
+            var dataRecognized;
 
             var jsonData = {
                 filename: file.name
@@ -434,38 +435,56 @@
                 .then(function(data) {
                     console.log(data)
                     // $('.audioFileNumber').val(data)
-                    // return fetch("/paragraph/"+data, {
-                    //     method: "GET",
-                    //     headers: {
-                    //         "Content-Type": "application/json"
-                    //     }
-                    // });
+                    dataRecognized = data.recognized
+                    var contentData = {
+                        content:data.recognized
+                    }
+                    console.log(contentData)
+                    return fetch("/nelinking", {
+                        method: "POST",
+                        body: JSON.stringify(contentData),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Error sending another API request");
+                    }
+                })
+                .then(function(data) {
                     console.log(data); // Access the JSON response data from the second API request
+                    console.log(dataRecognized)
+
+                    var newDataRecognized = dataRecognized
+                    data.forEach(data => {
+                        const replaceRegex = new RegExp(data.mention, "g");
+                        newDataRecognized = newDataRecognized.replaceAll(replaceRegex, `<a href="${data.url}">${data.mention}</a>`);
+                    });
+
+                    console.log(newDataRecognized)
+
+                    // for (let i = 0; i < data.length; i++){
+                    //     let word = data[i].mention
+                    //     let url = data[i].url
+                    //     let s_pos = data[i].s_pos
+                    //     let def = data[i].definition
+                    //
+                    //     dataRecognized.slice()
+                    // }
+
                     var element = document.querySelector(".e108_4");
                     if (element) {
                         // Set the inner text of the element
-                        element.innerText = data.recognized;
+                        element.innerHTML = newDataRecognized;
                     }
-
                 })
-                // .then(function(response) {
-                //     if (response.ok) {
-                //         return response.json();
-                //     } else {
-                //         throw new Error("Error sending another API request");
-                //     }
-                // })
-                // .then(function(data) {
-                //     console.log(data); // Access the JSON response data from the second API request
-                //     var element = document.querySelector(".e108_4");
-                //     if (element) {
-                //         // Set the inner text of the element
-                //         element.innerText = data.paragraph;
-                //     }
-                // })
-                // .catch(function(error) {
-                //     console.error(error);
-                // });
+                .catch(function(error) {
+                    console.error(error);
+                });
         }
         function askQuestionBaseOnTextFile() {
             var question = document.querySelector('.e109_11').value
@@ -542,7 +561,6 @@
                     console.error(error);
                 });
         }
-
         function buttonOnGoogle(){
             var data = document.querySelector(".findOnGoogle").value
             console.log(data)

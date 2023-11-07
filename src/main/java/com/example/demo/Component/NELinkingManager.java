@@ -1,6 +1,5 @@
 package com.example.demo.Component;
 
-import com.example.demo.Dto.ChatBotDto.ChatBotResponseDto;
 import com.example.demo.Dto.NELinking.NELinkingResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -46,19 +45,25 @@ public class NELinkingManager {
         JsonNode answer = jsonNode.get("return_object").findValue("mentions").findValue("definition");
 
         List<NELinkingResponseDto.ResponseDto> responseDtos = new ArrayList<>();
-        for(int i = 0; i<jsonNode.get("return_object").size(); i++){
-            if(jsonNode.get("return_object").get(i).findValue("mentions").isEmpty()){
-               continue;
+        for(int i = 0; i<jsonNode.get("return_object").size(); i++) {
+            if (jsonNode.get("return_object").get(i).findValue("mentions").isEmpty()) {
+                continue;
             }
-            String mention = jsonNode.get("return_object").get(i).findValue("mentions").findValue("mention").asText();
-            String definition = jsonNode.get("return_object").get(i).findValue("mentions").findValue("definition").asText();
 
-            responseDtos.add(
-                    NELinkingResponseDto.ResponseDto.builder()
-                            .mention(mention)
-                            .definition(definition)
-                            .build()
-            );
+           for (int a = 0; a < jsonNode.get("return_object").get(i).findValue("mentions").findValues("mention").size(); a++) {
+                String mention = jsonNode.get("return_object").get(i).findValue("mentions").findValues("mention").get(a).asText();
+                String definition = jsonNode.get("return_object").get(i).findValue("mentions").findValues("definition").get(a).asText();
+                Long s_pos = jsonNode.get("return_object").get(i).findValue("mentions").findValues("s_pos").get(a).asLong();
+                String url = jsonNode.get("return_object").get(i).findValue("mentions").findValues("url").get(a).asText();
+                responseDtos.add(
+                        NELinkingResponseDto.ResponseDto.builder()
+                                .mention(mention)
+                                .definition(definition)
+                                .s_pos(s_pos)
+                                .url(url)
+                                .build()
+                );
+            }
         }
         return responseDtos;
     }
