@@ -31,6 +31,7 @@ public class RecordWordController {
     @Autowired
     FileAccessManager fileAccessManager;
 
+    //recording file save to database
     @PostMapping("/recording")
     public ResponseEntity<Long> recording(@RequestBody RecognitionRequestDto.AudioFileRequest audioFileRequest) throws UnsupportedEncodingException, JsonProcessingException {
         return ResponseEntity.ok().body(recordWordService.recording(getKey, audioFileRequest));
@@ -42,11 +43,13 @@ public class RecordWordController {
         return ResponseEntity.ok().body(recordWordService.getParagraph(recording_id));
     }
 
+    //recording file 기반 질문
     @PostMapping("/question/{recording_id}")
     public ResponseEntity<MRCServletResponseDto.ResponseDto> getAnswerByQuestion(@PathVariable("recording_id")Long recording_id, @RequestBody MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
         return ResponseEntity.ok().body(recordWordService.getAnswerByQuestion(recording_id, getKey, requestDto));
     }
 
+    //recording file upload
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         // 업로드된 파일을 저장할 디렉토리 경로

@@ -228,10 +228,166 @@
             font-size:20px;
             letter-spacing:0;
         }
+
+        .e109_5 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:431px;
+            height:693px;
+            position:absolute;
+            left:492px;
+            top:211px;
+        }
+        .109_5 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e109_6 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:431px;
+            height:83px;
+            position:absolute;
+            left:492px;
+            top:109px;
+        }
+        .109_6 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e109_8 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:83px;
+            height:52px;
+            position:absolute;
+            left:823px;
+            top:121px;
+        }
+        .109_8 {
+                border:1px solid rgba(0, 0, 0, 1);
+            }
+        .e109_10 {
+            color:rgba(0, 0, 0, 1);
+            width:37px;
+            height:24px;
+            position:absolute;
+            left:846px;
+            top:137px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e109_11 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            color:rgba(0, 0, 0, 1);
+            width:298px;
+            height:49px;
+            position:absolute;
+            left:508px;
+            top:124px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e115_4 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:176px;
+            height:61px;
+            position:absolute;
+            left:960px;
+            top:25px;
+            border-radius: 20px;
+        }
+        .e115_5 {
+            color:rgba(0, 0, 0, 1);
+            width:122px;
+            height:24px;
+            position:absolute;
+            left:987px;
+            top:43px;
+            font-family:Inter;
+            text-align:left;
+            font-size:20px;
+            letter-spacing:0;
+        }
+        .e103_14 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:436px;
+            height:798px;
+            position:absolute;
+            left:25px;
+            top:106px;
+        }
+        .e115_8 {
+            width:447px;
+            height:795px;
+            position:absolute;
+            left:960px;
+            top:106px;
+        }
+        .e115_6 {
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:448px;
+            height:795px;
+            position:absolute;
+            left:-1px;
+            top:0px;
+        }
+        .e115_9 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+            width:423px;
+            height:80px;
+            position:flex;
+            left:2px;
+            top:0px;
+            overflow: hidden;
+        }
+        .link_text{
+            font-size: 20px;
+        }
+        .findOnGoogle{
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            width: 300px;
+            height: 60px;
+            flex-shrink: 0;
+            margin: 10px;
+            border: 1px solid #000;
+            background: #D9D9D9;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        .buttonOnGoogle{
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            width: 83px;
+            height: 60px;
+            flex-shrink: 0;
+            margin: 10px;
+            border: 1px solid #000;
+            background: #D9D9D9;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        .searchbox{
+            display: flex;
+            align-items: center;
+        }
     </style>
+    <!--    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css'>-->
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+
         function uploadFile() {
             var inputFile = document.getElementById("input-file");
             var file = inputFile.files[0];
@@ -276,6 +432,7 @@
                     }
                 })
                 .then(function(data) {
+                    $('.audioFileNumber').val(data)
                     return fetch("/paragraph/"+data, {
                         method: "GET",
                         headers: {
@@ -302,6 +459,122 @@
                     console.error(error);
                 });
         }
+        function askQuestionBaseOnTextFile() {
+            var question = document.querySelector('.e109_11').value
+            var audioFileNum = parseInt($('.audioFileNumber').val())
+            var jsonData = {
+                question: question
+            }
+            fetch("/question/"+audioFileNum, {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Error sending another API request')
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    var element = document.querySelector(".e109_5");
+                    if (element) {
+                        // Set the inner text of the element
+                        element.innerText = data.answer;
+                    }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+
+        }
+        function findRelativeLink(){
+            var jsonData = {
+                question: "data"
+            }
+            fetch("/search", {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Error sending another API request')
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    for (let i = 0; i < data.length; i++) {
+                        var divBox = document.createElement("div");
+                        divBox.classList.add("e115_9");
+                        var a_link = document.createElement("a");
+                        a_link.classList.add("link_text")
+                        a_link.href = data[i].link;
+                        a_link.innerText = data[i].title;
+                        divBox.append(a_link)
+                        document.querySelector(".e115_6").appendChild(divBox);
+                    }
+
+                    // if (element) {
+                    //     // Set the inner text of the element
+                    //     element.innerText = data.answer;
+                    // }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
+
+        function buttonOnGoogle(){
+            var data = document.querySelector(".findOnGoogle").value
+            console.log(data)
+            var jsonData = {
+                question: data
+            }
+            fetch("/search", {
+                method: "POST",
+                body: JSON.stringify(jsonData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        alert('Error sending another API request')
+                    }
+                })
+                .then(function(data) {
+                    console.log(data); // Access the JSON response data from the second API request
+                    for (let i = 0; i < data.length; i++) {
+                        var divBox = document.createElement("div");
+                        divBox.classList.add("e115_9");
+                        var a_link = document.createElement("a");
+                        a_link.classList.add("link_text")
+                        a_link.href = data[i].link;
+                        a_link.innerText = data[i].title;
+                        divBox.append(a_link)
+                        document.querySelector(".e115_6").appendChild(divBox);
+                    }
+
+                    // if (element) {
+                    //     // Set the inner text of the element
+                    //     element.innerText = data.answer;
+                    // }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
     </script>
 </head>
 <body>
@@ -309,15 +582,28 @@
     <div class="e103_8"></div>
     <div class="e103_9"></div>
     <div class="e103_12"></div>
-
-
     <input id="input-file" class="e103_10" type="file" name="file"/>
     <button class="e103_13" onclick="uploadFile()" type="submit">
         Upload
     </button>
+    <input type="hidden" class="audioFileNumber">
     <div class="e103_14"></div>
     <div class="e104_2" onclick="getTextFromFile()"></div><span  class="e104_3">텍스트로 반환</span>
     <span  class="e108_4"></span>
+    <div class="e109_5"></div>
+    <div class="e109_6"></div>
+    <div class="e109_8"></div><span  class="e109_10" onclick="askQuestionBaseOnTextFile()">질문</span>
+    <input type="text" class="e109_11" placeholder="질문하기">
+    <div class="e115_4" onclick="findRelativeLink()"></div><span  class="e115_5">관련 자료 찾기</span>
+    <div class=e115_8>
+        <div class="e115_6">
+            <div class="searchbox">
+                <input type="text" class="findOnGoogle" placeholder="google에 물어보세요">
+                <div class="buttonOnGoogle" onclick="buttonOnGoogle()"><p>검색</p></div>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>
 </body>
 </html>
