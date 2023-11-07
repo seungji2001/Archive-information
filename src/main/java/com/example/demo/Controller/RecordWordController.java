@@ -4,6 +4,7 @@ import com.example.demo.Component.FileAccessManager;
 import com.example.demo.Dto.MRCServletDto.MRCServletRequestDto;
 import com.example.demo.Dto.MRCServletDto.MRCServletResponseDto;
 import com.example.demo.Dto.RecognitionDto.RecognitionRequestDto;
+import com.example.demo.Dto.RecognitionDto.RecognitionResponseDto;
 import com.example.demo.Dto.RecordWordDto.RecordWordResponseDto;
 import com.example.demo.Repository.RecordWordRepository;
 import com.example.demo.Service.RecordWordService;
@@ -33,7 +34,7 @@ public class RecordWordController {
 
     //recording file save to database
     @PostMapping("/recording")
-    public ResponseEntity<Long> recording(@RequestBody RecognitionRequestDto.AudioFileRequest audioFileRequest) throws UnsupportedEncodingException, JsonProcessingException {
+    public ResponseEntity<RecognitionResponseDto.questionResponse> recording(@RequestBody RecognitionRequestDto.AudioFileRequest audioFileRequest) throws UnsupportedEncodingException, JsonProcessingException {
         return ResponseEntity.ok().body(recordWordService.recording(getKey, audioFileRequest));
     }
 
@@ -44,9 +45,9 @@ public class RecordWordController {
     }
 
     //recording file 기반 질문
-    @PostMapping("/question/{recording_id}")
-    public ResponseEntity<MRCServletResponseDto.ResponseDto> getAnswerByQuestion(@PathVariable("recording_id")Long recording_id, @RequestBody MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
-        return ResponseEntity.ok().body(recordWordService.getAnswerByQuestion(recording_id, getKey, requestDto));
+    @PostMapping("/question")
+    public ResponseEntity<MRCServletResponseDto.ResponseDto> getAnswerByQuestion(@RequestBody MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
+        return ResponseEntity.ok().body(recordWordService.getAnswerByQuestion(getKey, requestDto));
     }
 
     //recording file upload

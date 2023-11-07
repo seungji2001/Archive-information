@@ -399,14 +399,14 @@
                 method: "POST",
                 body: formData
             })
-                .then(function(response) {
+                .then(function (response) {
                     if (response.ok) {
                         alert("File uploaded successfully");
                     } else {
                         alert("Error uploading file");
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log(error);
                 });
         }
@@ -432,40 +432,50 @@
                     }
                 })
                 .then(function(data) {
-                    $('.audioFileNumber').val(data)
-                    return fetch("/paragraph/"+data, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    });
-                })
-                .then(function(response) {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error("Error sending another API request");
-                    }
-                })
-                .then(function(data) {
+                    console.log(data)
+                    // $('.audioFileNumber').val(data)
+                    // return fetch("/paragraph/"+data, {
+                    //     method: "GET",
+                    //     headers: {
+                    //         "Content-Type": "application/json"
+                    //     }
+                    // });
                     console.log(data); // Access the JSON response data from the second API request
                     var element = document.querySelector(".e108_4");
                     if (element) {
                         // Set the inner text of the element
-                        element.innerText = data.paragraph;
+                        element.innerText = data.recognized;
                     }
+
                 })
-                .catch(function(error) {
-                    console.error(error);
-                });
+                // .then(function(response) {
+                //     if (response.ok) {
+                //         return response.json();
+                //     } else {
+                //         throw new Error("Error sending another API request");
+                //     }
+                // })
+                // .then(function(data) {
+                //     console.log(data); // Access the JSON response data from the second API request
+                //     var element = document.querySelector(".e108_4");
+                //     if (element) {
+                //         // Set the inner text of the element
+                //         element.innerText = data.paragraph;
+                //     }
+                // })
+                // .catch(function(error) {
+                //     console.error(error);
+                // });
         }
         function askQuestionBaseOnTextFile() {
             var question = document.querySelector('.e109_11').value
-            var audioFileNum = parseInt($('.audioFileNumber').val())
+            var sentence = document.querySelector(".e108_4").innerHTML
+            console.log(sentence)
             var jsonData = {
-                question: question
+                question: question,
+                content:sentence
             }
-            fetch("/question/"+audioFileNum, {
+            fetch("/question", {
                 method: "POST",
                 body: JSON.stringify(jsonData),
                 headers: {

@@ -27,12 +27,12 @@ public class RecordWordService {
     MRCServletManager mrcServletManager;
 
     @Transactional
-    public Long recording(String getKey, RecognitionRequestDto.AudioFileRequest filename) throws UnsupportedEncodingException, JsonProcessingException {
+    public RecognitionResponseDto.questionResponse recording(String getKey, RecognitionRequestDto.AudioFileRequest filename) throws UnsupportedEncodingException, JsonProcessingException {
         RecognitionResponseDto.questionResponse questionResponse = recognitionManager.getRecognition(getKey, filename);
         RecordWord recordWord = RecordWord.builder()
                 .paragraph(questionResponse.getRecognized())
                 .build();
-        return recordWordRepository.save(recordWord).getId();
+        return questionResponse;
     }
 
     @Transactional
@@ -45,10 +45,10 @@ public class RecordWordService {
     }
 
     @Transactional
-    public MRCServletResponseDto.ResponseDto getAnswerByQuestion(Long recording_id, String getKey, MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
-        RecordWord recordWord = recordWordRepository.findById(recording_id).orElseThrow();
+    public MRCServletResponseDto.ResponseDto getAnswerByQuestion(String getKey, MRCServletRequestDto.RequestQuestionDto requestDto) throws JsonProcessingException {
+//        RecordWord recordWord = recordWordRepository.findById(recording_id).orElseThrow();
         MRCServletRequestDto.RequestDto requestDto1 = MRCServletRequestDto.RequestDto.builder()
-                .text(recordWord.getParagraph())
+                .text(requestDto.getContent())
                 .question(requestDto.getQuestion())
                 .build();
         return mrcServletManager.getMRCServlet(getKey, requestDto1);

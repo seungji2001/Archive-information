@@ -22,5 +22,6 @@ public class MRCServletRequestDto {
     @Builder
     public static class RequestQuestionDto{
         String question;
+        String content;
     }
 }
