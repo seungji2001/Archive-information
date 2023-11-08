@@ -336,6 +336,7 @@
             position:absolute;
             left:-1px;
             top:0px;
+            overflow: scroll;
         }
         .e115_9 {
             display: flex;
@@ -537,12 +538,22 @@
         }
         function findRelativeLink(){
             console.log(document.getElementsByClassName('dataPointed'))
-            var jsonData = {
-                question: "data"
+            var elements = document.getElementsByClassName('dataPointed')
+            var dataList = []
+            for (let i = 0; i < elements.length; i++) {
+                var innerText = elements[i].innerText;
+                const jsonObject = {
+                    data: innerText
+                };
+                dataList.push(jsonObject);
             }
+            var json = {
+                relativeData : dataList
+            }
+
             fetch("/search/relativeData", {
                 method: "POST",
-                body: JSON.stringify(jsonData),
+                body: JSON.stringify(json),
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -561,6 +572,7 @@
                         divBox.classList.add("e115_9");
                         var a_link = document.createElement("a");
                         a_link.classList.add("link_text")
+                        a_link.setAttribute("target", "_blank");
                         a_link.href = data[i].link;
                         a_link.innerText = data[i].title;
                         divBox.append(a_link)
