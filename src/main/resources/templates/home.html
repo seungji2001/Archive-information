@@ -528,7 +528,7 @@
                     var element = document.querySelector(".e109_5");
                     if (element) {
                         // Set the inner text of the element
-                        element.innerText = data.answer;
+                        element.innerHTML = data.answer;
                     }
                 })
                 .catch(function(error) {
@@ -592,8 +592,9 @@
             var data = document.querySelector(".findOnGoogle").value
             console.log(data)
             var jsonData = {
-                question: data
+                data: data
             }
+            console.log(jsonData)
             fetch("/search", {
                 method: "POST",
                 body: JSON.stringify(jsonData),
@@ -614,6 +615,7 @@
                         var divBox = document.createElement("div");
                         divBox.classList.add("e115_9");
                         var a_link = document.createElement("a");
+                        a_link.setAttribute("target", "_blank");
                         a_link.classList.add("link_text")
                         a_link.href = data[i].link;
                         a_link.innerText = data[i].title;

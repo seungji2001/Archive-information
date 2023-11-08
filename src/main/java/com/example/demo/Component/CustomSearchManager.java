@@ -39,7 +39,9 @@ public class CustomSearchManager {
                     + "q="
                     + searchData.getData()
                     + "&start="
-                    + i*10;
+                    + i
+                    +"&num="
+                        +1;
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/json; charset=UTF-8");
