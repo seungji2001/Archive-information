@@ -230,6 +230,7 @@
         }
 
         .e109_5 {
+            overflow: scroll;
             box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
             background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
             width:431px;
@@ -384,6 +385,7 @@
             align-items: center;
         }
         .MemoBox{
+            overflow: scroll;
             width: 448px;
             height: 795px;
             flex-shrink: 0;
@@ -393,6 +395,67 @@
             background: #D9D9D9;
             position: absolute;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+        .uploadData{
+            right: 293px;
+            top:24px;
+            position: absolute;
+            width: 176px;
+            height: 61px;
+            border-radius: 20px;
+            border: 1px solid #000;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            background: #D9D9D9;
+            flex-shrink: 0;
+            color: #000;
+            font-family: Inter;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-align: center;
+        }
+        .uploadDataFile{
+            position: absolute;
+            right: 22px;
+            top: 24px;
+            width: 176px;
+            height: 61px;
+            border-radius: 20px;
+            border: 1px solid #000;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            background: #D9D9D9;
+            flex-shrink: 0;
+
+        }
+        .firstText{
+            position:absolute;
+            top:25px;
+            left: 20px;
+            width: 382px;
+            height: 306px;
+            flex-shrink: 0;
+            color: #000;
+            font-family: Inter;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+        .secondText{
+            position: absolute;
+            top:368px;
+            left: 20px;
+            width: 382px;
+            height: 306px;
+            flex-shrink: 0;
+            color: #000;
+            font-family: Inter;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+
         }
     </style>
     <!--    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css'>-->
@@ -417,6 +480,32 @@
                     } else {
                         alert("Error uploading file");
                     }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+        function uploadDataFile() {
+            var inputFile = document.getElementById("input-data-file");
+            var file = inputFile.files[0];
+
+            var formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/upload/text", {
+                method: "POST",
+                body: formData
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.text()
+                    } else {
+                        alert("Error uploading file");
+                    }
+                })
+                .then(function (data) {
+                    document.querySelector('.MemoBox').innerText = data
+                    console.log(data)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -504,6 +593,36 @@
         function askQuestionBaseOnTextFile() {
             var question = document.querySelector('.e109_11').value
             var sentence = document.querySelector(".e108_4").innerText
+
+            if(document.querySelector(".MemoBox").value !== ""){
+                var jsonData = {
+                    question : question,
+                    content : document.querySelector(".MemoBox").value
+                }
+                fetch("/question", {
+                    method: "POST",
+                    body: JSON.stringify(jsonData),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            alert("Error sending another API request");
+                        }
+                    })
+                    .then(function (data) {
+                        console.log(data);
+                        var element = document.querySelector(".secondText");
+                        const newElement = document.createElement("div");
+                        newElement.innerText = data.answer;
+
+                        // Append the new element to the existing element
+                        element.appendChild(newElement);
+                    });
+            }
             // console.log(sentence)
             // var jsonData = {
             //     question: question,
@@ -555,7 +674,7 @@
                 })
                 .then(function(data) {
                     console.log(data); // Access the JSON response data from the second API request
-                    var element = document.querySelector(".e109_5");
+                    var element = document.querySelector(".firstText");
                     if (element) {
                         // Set the inner text of the element
                         element.innerHTML = data.answer;
@@ -576,7 +695,7 @@
                         })
                         .then(function (data){
                             console.log(data)
-                            var element = document.querySelector(".e109_5");
+                            var element = document.querySelector(".firstText");
                             const newElement = document.createElement("div");
                             newElement.innerText = data;
 
@@ -700,7 +819,12 @@
     <div class="e103_14"></div>
     <div class="e104_2" onclick="getTextFromFile()"></div><span  class="e104_3">텍스트로 반환</span>
     <span  class="e108_4"></span>
-    <div class="e109_5"></div>
+    <div class="e109_5">
+        <div class="firstText">
+        </div>
+        <div class="secondText">
+        </div>
+    </div>
     <div class="e109_6"></div>
     <div class="e109_8"></div><span  class="e109_10" onclick="askQuestionBaseOnTextFile()">질문</span>
     <input type="text" class="e109_11" placeholder="질문하기">
@@ -713,9 +837,12 @@
             </div>
         </div>
     </div>
+    <input id="input-data-file" class="uploadData" type="file" name="file"/>
+    <button class="uploadDataFile" onclick="uploadDataFile()" type="submit">
+        Upload
+    </button>
     <textarea class="MemoBox">
     </textarea>
-</div>
 </div>
 </body>
 </html>
