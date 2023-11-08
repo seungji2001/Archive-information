@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +30,14 @@ public class DataArchiveService {
     }
 
     public List<DataArchiveResponseDto.resultLink> searchData(DataArchiveRequestDto.SearchData searchData, String googleKey, String cx) throws JsonProcessingException {
-        return customSearchManager.customSearch(searchData, googleKey, cx);
+        return customSearchManager.customSearch(searchData, googleKey, cx, true);
+    }
+    public List<DataArchiveResponseDto.resultLink> searchRelativeData(DataArchiveRequestDto.AudioRelativeData audioRelativeData, String googleKey, String cx) throws JsonProcessingException {
+
+        List<DataArchiveResponseDto.resultLink> resultLinks = new ArrayList<>();
+        for(int i = 0; i<audioRelativeData.getRelativeData().size(); i++){
+            resultLinks.addAll(customSearchManager.customSearch(audioRelativeData.getRelativeData().get(i), googleKey, cx, false));
+        }
+        return resultLinks;
     }
 }

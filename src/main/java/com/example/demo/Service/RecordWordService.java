@@ -29,9 +29,6 @@ public class RecordWordService {
     @Transactional
     public RecognitionResponseDto.questionResponse recording(String getKey, RecognitionRequestDto.AudioFileRequest filename) throws UnsupportedEncodingException, JsonProcessingException {
         RecognitionResponseDto.questionResponse questionResponse = recognitionManager.getRecognition(getKey, filename);
-        RecordWord recordWord = RecordWord.builder()
-                .paragraph(questionResponse.getRecognized())
-                .build();
         return questionResponse;
     }
 

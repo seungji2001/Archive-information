@@ -65,6 +65,31 @@ public class DataArchiveController {
         return ResponseEntity.ok().body(resultLinks);
     }
 
+    @PostMapping("/search/relativeData")
+    public ResponseEntity<List<DataArchiveResponseDto.resultLink>> searchData(@RequestBody DataArchiveRequestDto.AudioRelativeData audioRelativeData) throws JsonProcessingException {
+        return ResponseEntity.ok().body(dataArchiveService.searchRelativeData(audioRelativeData,googleKey,cx));
+//        List<DataArchiveResponseDto.resultLink> resultLinks = new ArrayList<>();
+//        resultLinks.add(
+//                DataArchiveResponseDto.resultLink.builder()
+//                        .title(".NET을 통한 Python의 파일 형식 및 문서 처리")
+//                        .link("https://www.aspose.com/ko/products/python-net/")
+//                        .build()
+//        );
+//        resultLinks.add(
+//                DataArchiveResponseDto.resultLink.builder()
+//                        .title("파이썬(Python) 바로 알기 – 특징, 장점, 활용 사례 | 가비아 라이브러리")
+//                        .link("https://library.gabia.com/contents/9256/")
+//                        .build()
+//        );
+//        resultLinks.add(
+//                DataArchiveResponseDto.resultLink.builder()
+//                        .title("Python 세계에서 Ansys의 강력한 기능에 액세스")
+//                        .link("https://www.ansys.com/ko-kr/blog/accessing-ansys-from-python")
+//                        .build()
+//        );
+//        return ResponseEntity.ok().body(resultLinks);
+    }
+
     @GetMapping("/home")
     public String home(){
         return "home";

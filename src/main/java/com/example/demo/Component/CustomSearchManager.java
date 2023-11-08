@@ -22,9 +22,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomSearchManager {
-    public List<DataArchiveResponseDto.resultLink> customSearch(DataArchiveRequestDto.SearchData searchData, String googleKey, String cx) throws JsonProcessingException {
+    public List<DataArchiveResponseDto.resultLink> customSearch(DataArchiveRequestDto.SearchData searchData, String googleKey, String cx, Boolean total) throws JsonProcessingException {
         List<DataArchiveResponseDto.resultLink> totalJsonNodes = new ArrayList<>();
-        for(int i = 1; i<=2; i++){
+        int end;
+        if(total){
+            end = 50;
+        }else{
+            end = 5;
+        }
+        for(int i = 1; i<=1; i++){
             String openApiURL = "https://www.googleapis.com/customsearch/v1?key="
                     + googleKey
                     + "&cx="

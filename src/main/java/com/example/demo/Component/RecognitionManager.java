@@ -29,7 +29,7 @@ public class RecognitionManager {
 
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String languageCode = "korean";     // 언어 코드
-        String audioFilePath = "/Users/seungjibaek/IdeaProjects/demo/src/main/resources/asset/" + filename.getFilename();  // 녹음된 음성 파일 경로
+        String audioFilePath = "/Users/seungjibaek/IdeaProjects/Archive-information/src/main/resources/asset/";  // 녹음된 음성 파일 경로
         String audioContents = null;
 
         try {

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class DataArchiveRequestDto {
 
     @Data
@@ -21,5 +23,13 @@ public class DataArchiveRequestDto {
     @Builder
     public static class SearchData{
         String data;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class AudioRelativeData{
+        List<SearchData> relativeData;
     }
 }

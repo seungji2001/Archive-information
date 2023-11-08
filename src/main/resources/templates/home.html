@@ -8,13 +8,13 @@
             overflow:hidden;
         }
         .e103_19 {
-            width:1438px;
+            width:1903px;
             height:936px;
             position:absolute;
         }
         .e103_8 {
             background-color:rgba(203.90047878026962, 205.06250202655792, 190.5372342467308, 1);
-            width:1438px;
+            width:1903px;
             height:936px;
             position:absolute;
             left:4px;
@@ -116,7 +116,7 @@
         }
         .e103_8 {
             background-color:rgba(203.90047878026962, 205.06250202655792, 190.5372342467308, 1);
-            width:1438px;
+            width:1903px;
             height:936px;
             position:absolute;
             left:4px;
@@ -382,6 +382,17 @@
             display: flex;
             align-items: center;
         }
+        .MemoBox{
+            width: 448px;
+            height: 795px;
+            flex-shrink: 0;
+            border: 1px solid #000;
+            right: 22px;
+            top:105px;
+            background: #D9D9D9;
+            position: absolute;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
     </style>
     <!--    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css'>-->
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
@@ -462,7 +473,10 @@
                     var newDataRecognized = dataRecognized
                     data.forEach(data => {
                         const replaceRegex = new RegExp(data.mention, "g");
-                        newDataRecognized = newDataRecognized.replaceAll(replaceRegex, `<a href="${data.url}">${data.mention}</a>`);
+                        if(data.url === "")
+                            newDataRecognized = newDataRecognized.replaceAll(replaceRegex, `<a style="color:blue" class="dataPointed">${data.mention}</a>`);
+                        else
+                            newDataRecognized = newDataRecognized.replaceAll(replaceRegex, `<a href="${data.url}" target="_blank" class="dataPointed">${data.mention}</a>`);
                     });
 
                     console.log(newDataRecognized)
@@ -522,10 +536,11 @@
 
         }
         function findRelativeLink(){
+            console.log(document.getElementsByClassName('dataPointed'))
             var jsonData = {
                 question: "data"
             }
-            fetch("/search", {
+            fetch("/search/relativeData", {
                 method: "POST",
                 body: JSON.stringify(jsonData),
                 headers: {
@@ -631,6 +646,8 @@
             </div>
         </div>
     </div>
+    <textarea class="MemoBox">
+    </textarea>
     </div>
 </div>
 </body>
