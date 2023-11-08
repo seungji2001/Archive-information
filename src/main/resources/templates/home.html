@@ -509,12 +509,35 @@
                 question: question,
                 content:sentence
             }
-            fetch("/question", {
+            fetch("/translate", {
                 method: "POST",
-                body: JSON.stringify(jsonData),
+                body: JSON.stringify(question),
                 headers: {
                     "Content-Type": "application/json"
                 }
+            })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        alert("Error uploading file");
+                    }
+                })
+                .then(function(data) {
+                console.log(data)
+                // $('.audioFileNumber').val(data)
+                dataRecognized = data.recognized
+                var contentData = {
+                    content:data.recognized
+                }
+                console.log(contentData)
+                return  fetch("/question", {
+                    method: "POST",
+                    body: JSON.stringify(jsonData),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
             })
                 .then(function (response) {
                     if (response.ok) {

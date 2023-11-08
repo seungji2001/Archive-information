@@ -111,7 +111,7 @@ public class DataArchiveController {
     }
 
     @GetMapping("/translate")
-    public void getTranslate() throws MalformedURLException {
-        translateManager.translate(client_id, secret_key, "안녕");
+    public ResponseEntity<String> getTranslate(@RequestBody String question) throws MalformedURLException {
+        return ResponseEntity.ok().body(translateManager.translate(client_id, secret_key, question));
     }
 }

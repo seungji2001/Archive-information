@@ -1,14 +1,12 @@
 package com.example.demo.Component;
 
-import org.springframework.http.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +54,7 @@ import java.util.Map;
 //            }
 //        }
 
-        public void translate(String clientId, String clientSecret, String korean) throws MalformedURLException {
+        public String translate(String clientId, String clientSecret, String korean) throws MalformedURLException {
             String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
             String text;
             try {
@@ -71,12 +69,22 @@ import java.util.Map;
 
             String responseBody = post(apiURL, requestHeaders, text);
 
-            System.out.println(responseBody);
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
+            String translatedText = jsonObject.get("message")
+                    .getAsJsonObject()
+                    .get("result")
+                    .getAsJsonObject()
+                    .get("translatedText")
+                    .getAsString();
+
+            return translatedText;
+
         }
 
         private static String post(String apiUrl, Map<String, String> requestHeaders, String text) throws MalformedURLException {
             HttpURLConnection con = connect(apiUrl);
-            String postParams = "source=ko&target=en&text=" + text; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
+            String postParams = "source=en&target=ko&text=" + text; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
             try {
                 con.setRequestMethod("POST");
                 for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
