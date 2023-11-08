@@ -509,7 +509,7 @@
             //     question: question,
             //     content:sentence
             // }
-            fetch("/translate", {
+            fetch("/translate/en", {
                 method: "POST",
                 body: question,
                 headers: {
@@ -560,6 +560,29 @@
                         // Set the inner text of the element
                         element.innerHTML = data.answer;
                     }
+                    return fetch("/translate/ko", {
+                        method: "POST",
+                        body: data.answer,
+                        headers: {
+                            "Content-Type": "application/text"
+                        }
+                    })
+                        .then(function (response) {
+                            if (response.ok) {
+                                return response.text()
+                            } else {
+                                alert('Error sending another API request')
+                            }
+                        })
+                        .then(function (data){
+                            console.log(data)
+                            var element = document.querySelector(".e109_5");
+                            const newElement = document.createElement("div");
+                            newElement.innerText = data;
+
+// Append the new element to the existing element
+                            element.appendChild(newElement);
+                        })
                 })
                 .catch(function(error) {
                     console.error(error);

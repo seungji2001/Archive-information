@@ -54,11 +54,11 @@ import java.util.Map;
 //            }
 //        }
 
-        public String translate(String clientId, String clientSecret, String korean) throws MalformedURLException {
+        public String translate(String clientId, String clientSecret, String question, String lan) throws MalformedURLException {
             String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
             String text;
             try {
-                text = URLEncoder.encode(korean, "UTF-8");
+                text = URLEncoder.encode(question, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException("인코딩 실패", e);
             }
@@ -67,7 +67,7 @@ import java.util.Map;
             requestHeaders.put("X-Naver-Client-Id", clientId);
             requestHeaders.put("X-Naver-Client-Secret", clientSecret);
 
-            String responseBody = post(apiURL, requestHeaders, text);
+            String responseBody = post(apiURL, requestHeaders, text, lan);
 
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(responseBody, JsonObject.class);
@@ -82,9 +82,13 @@ import java.util.Map;
 
         }
 
-        private static String post(String apiUrl, Map<String, String> requestHeaders, String text) throws MalformedURLException {
+        private static String post(String apiUrl, Map<String, String> requestHeaders, String text, String lan) throws MalformedURLException {
             HttpURLConnection con = connect(apiUrl);
-            String postParams = "source=en&target=ko&text=" + text; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
+            String postParams = null; //원본언어: 한국어 (ko) -> 목적언어: 영어 (en)
+            if(lan.equals("en"))
+                postParams = "source=en&target=ko&text=" + text;
+            else if(lan.equals("ko"))
+                postParams = "source=ko&target=en&text=" + text;
             try {
                 con.setRequestMethod("POST");
                 for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
