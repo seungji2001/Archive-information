@@ -110,7 +110,7 @@ public class DataArchiveController {
         return ResponseEntity.ok().body(neLinkingManager.getNeLinking(getKey, requestDto.getContent()));
     }
 
-    @GetMapping("/translate")
+    @PostMapping("/translate")
     public ResponseEntity<String> getTranslate(@RequestBody String question) throws MalformedURLException {
         return ResponseEntity.ok().body(translateManager.translate(client_id, secret_key, question));
     }

@@ -503,42 +503,49 @@
         }
         function askQuestionBaseOnTextFile() {
             var question = document.querySelector('.e109_11').value
-            var sentence = document.querySelector(".e108_4").innerHTML
-            console.log(sentence)
-            var jsonData = {
-                question: question,
-                content:sentence
-            }
+            var sentence = document.querySelector(".e108_4").innerText
+            // console.log(sentence)
+            // var jsonData = {
+            //     question: question,
+            //     content:sentence
+            // }
             fetch("/translate", {
                 method: "POST",
-                body: JSON.stringify(question),
+                body: question,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/text"
                 }
             })
-                .then(function(response) {
+                .then(function (response) {
                     if (response.ok) {
-                        return response.json();
+                        return response.text()
                     } else {
-                        alert("Error uploading file");
+                        alert('Error sending another API request')
                     }
                 })
                 .then(function(data) {
-                console.log(data)
-                // $('.audioFileNumber').val(data)
-                dataRecognized = data.recognized
-                var contentData = {
-                    content:data.recognized
-                }
-                console.log(contentData)
-                return  fetch("/question", {
-                    method: "POST",
-                    body: JSON.stringify(jsonData),
-                    headers: {
-                        "Content-Type": "application/json"
+
+                    console.log(data)
+                    // // $('.audioFileNumber').val(data)
+                    // dataRecognized = data.recognized
+                    // var contentData = {
+                    //     content:data.recognized
+                    // }
+                    // console.log(contentData)
+                    var jsonData = {
+                        question: data,
+                        content:sentence
                     }
-                });
-            })
+
+                    console.log(jsonData)
+                    return  fetch("/question", {
+                        method: "POST",
+                        body: JSON.stringify(jsonData),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+                })
                 .then(function (response) {
                     if (response.ok) {
                         return response.json()
@@ -685,7 +692,7 @@
     </div>
     <textarea class="MemoBox">
     </textarea>
-    </div>
+</div>
 </div>
 </body>
 </html>
